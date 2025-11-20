@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NailStudio - Agendamentos</title>
+    <link rel="stylesheet" href="vicstely.css">
+</head>
+
+<body>
+    <!-- Tela de Login -->
+    <section id="login-section" class="auth-section active-section">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>NailStudio</h1>
+                <p>Faça login para acessar sua conta</p>
+            </div>
+
+            <form class="auth-form" id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Senha</label>
+                    <input type="password" id="login-password" class="form-input" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Entrar</button>
+
+                <div class="auth-links">
+                    <p>Não tem uma conta? <a href="#" onclick="showSection('register-section')">Cadastre-se</a></p>
+                </div>
+            </form>
+
+            <!-- Credenciais de teste -->
+            <div class="test-credentials">
+                <h4>Credenciais de Teste:</h4>
+                <p><strong>Admin:</strong> admin@nailstudio.com / admin123</p>
+                <p><strong>Cliente:</strong> Qualquer email/senha no cadastro</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tela de Cadastro -->
+    <section id="register-section" class="auth-section">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>Criar Conta</h1>
+                <p>Cadastre-se para fazer agendamentos</p>
+            </div>
+
+            <form class="auth-form" id="register-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="register-name">Nome Completo</label>
+                        <input type="text" id="register-name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-phone">Telefone</label>
+                        <input type="tel" id="register-phone" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" class="form-input" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="register-password">Senha</label>
+                        <input type="password" id="register-password" class="form-input" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirmar Senha</label>
+                        <input type="password" id="register-confirm-password" class="form-input" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Criar Conta</button>
+
+                <div class="auth-links">
+                    <p>Já tem uma conta? <a href="#" onclick="showSection('login-section')">Faça login</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Sistema Principal (Após Login) -->
+    <section id="main-system" class="main-system">
+        <!-- Header Elegante -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>NailStudio</h1>
+                    <span id="user-role-display">Cliente</span>
+                </div>
+                <nav class="main-nav">
+                    <a href="#agendamentos" class="nav-link active" data-section="agendamentos-section">Meus
+                        Agendamentos</a>
+                    <a href="#novo-agendamento" class="nav-link" data-section="novo-agendamento-section">Novo
+                        Agendamento</a>
+                    <a href="#admin" class="nav-link admin-only" data-section="admin-section"
+                        style="display: none;">Administração</a>
+                </nav>
+                <div class="user-menu">
+                    <div class="avatar" id="user-avatar">U</div>
+                    <div class="user-info">
+                        <span class="user-name" id="user-display-name">Usuário</span>
+                        <button class="logout-btn" onclick="logout()">Sair</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <!-- Seção de Agendamentos do Cliente -->
+            <section id="agendamentos-section" class="content-section active-section">
+                <div class="section-header">
+                    <h2 class="section-title">Meus Agendamentos</h2>
+                    <button class="btn-primary" onclick="showContentSection('novo-agendamento-section')">
+                        <span>+</span> Novo Agendamento
+                    </button>
+                </div>
+
+                <div class="appointments-list" id="user-appointments-list">
+                    <!-- Agendamentos serão carregados via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Seção de Novo Agendamento -->
+            <section id="novo-agendamento-section" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">Novo Agendamento</h2>
+                    <button class="btn-secondary" onclick="showContentSection('agendamentos-section')">
+                        ← Voltar
+                    </button>
+                </div>
+
+                <form class="booking-form" id="booking-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="servico">Serviço</label>
+                            <select id="servico" class="form-input" required>
+                                <option value="">Selecione um serviço</option>
+                                <option value="manicure-basica" data-price="35">Manicure Básica - R$ 35,00</option>
+                                <option value="manicure-completa" data-price="45">Manicure Completa - R$ 45,00</option>
+                                <option value="pedicure-basica" data-price="40">Pedicure Básica - R$ 40,00</option>
+                                <option value="pedicure-completa" data-price="55">Pedicure Completa - R$ 55,00</option>
+                                <option value="alongamento-gel" data-price="85">Alongamento em Gel - R$ 85,00</option>
+                                <option value="spa-maos" data-price="65">Spa das Mãos - R$ 65,00</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tecnica">Técnica</label>
+                            <select id="tecnica" class="form-input" required>
+                                <option value="">Selecione uma técnica</option>
+                                <option value="camila">Camila - Alongamentos</option>
+                                <option value="juliana">Juliana - Design Artístico</option>
+                                <option value="fernanda">Fernanda - Pedicure</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="data">Data</label>
+                            <input type="date" id="data" class="form-input" required min="">
+                        </div>
+                        <div class="form-group">
+                            <label for="horario">Horário Disponível</label>
+                            <select id="horario" class="form-input" required>
+                                <option value="">Selecione um horário</option>
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="observacoes">Observações (opcional)</label>
+                        <textarea id="observacoes" class="form-input textarea" rows="4"
+                            placeholder="Alguma preferência especial..."></textarea>
+                    </div>
+
+                    <div class="form-summary">
+                        <div class="summary-item">
+                            <span>Serviço:</span>
+                            <span id="servico-selecionado">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Técnica:</span>
+                            <span id="tecnica-selecionada">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Data e Hora:</span>
+                            <span id="datahora-selecionada">-</span>
+                        </div>
+                        <div class="summary-item total">
+                            <span>Total:</span>
+                            <span id="total-selecionado">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <span>💅</span> Confirmar Agendamento
+                    </button>
+                </form>
+            </section>
+
+            <!-- Seção de Administração -->
+            <section id="admin-section" class="content-section admin-only">
+                <div class="section-header">
+                    <h2 class="section-title">Painel de Administração</h2>
+                    <div class="admin-stats">
+                        <div class="stat-card">
+                            <h3 id="total-agendamentos">0</h3>
+                            <p>Total Agendamentos</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="agendamentos-hoje">0</h3>
+                            <p>Agendamentos Hoje</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3 id="agendamentos-pendentes">0</h3>
+                            <p>Pendentes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-controls">
+                    <h3 style="width: 100%; margin-bottom: 15px;">Gerenciar Dados do Sistema</h3>
+                    <button class="btn-primary"
+                        onclick="showContentSection('crud-servicos-section'); crudManager.loadServicos()">
+                        📋 Serviços
+                    </button>
+                    <button class="btn-primary"
+                        onclick="showContentSection('crud-tecnicas-section'); crudManager.loadTecnicas()">
+                        👩‍💼 Técnicas
+                    </button>
+                    <button class="btn-primary"
+                        onclick="showContentSection('crud-clientes-section'); crudManager.loadClientes()">
+                        👥 Clientes
+                    </button>
+                    <button class="btn-primary"
+                        onclick="showContentSection('crud-agendamentos-section'); crudManager.loadAgendamentos()">
+                        📅 Agendamentos
+                    </button>
+                </div>
+
+                <div class="appointments-list" id="admin-appointments-list">
+                    <!-- Agendamentos de todos os usuários serão carregados aqui -->
+                </div>
+            </section>
+
+            <!-- Seção de CRUD Serviços -->
+            <section id="crud-servicos-section" class="content-section admin-only">
+                <div class="section-header">
+                    <h2 class="section-title">Gerenciar Serviços</h2>
+                    <button class="btn-secondary" onclick="showContentSection('admin-section')">
+                        ← Voltar ao Painel
+                    </button>
+                </div>
+
+                <form class="booking-form" id="servico-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="servico-nome">Nome do Serviço</label>
+                            <input type="text" id="servico-nome" name="nome" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="servico-preco">Preço (R$)</label>
+                            <input type="number" id="servico-preco" name="preco" class="form-input" step="0.01"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="servico-descricao">Descrição</label>
+                            <textarea id="servico-descricao" name="descricao" class="form-input textarea" rows="3"
+                                required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="servico-duracao">Duração (minutos)</label>
+                            <input type="number" id="servico-duracao" name="duracao_minutos" class="form-input"
+                                value="60" required>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-submit"
+                        onclick="crudManager.saveServico(new FormData(document.getElementById('servico-form')))">
+                        <span>💅</span> Salvar Serviço
+                    </button>
+                </form>
+
+                <div class="appointments-list" id="servicos-list">
+                    <!-- Lista de serviços será carregada aqui -->
+                </div>
+            </section>
+
+            <!-- Seção de CRUD Técnicas -->
+            <section id="crud-tecnicas-section" class="content-section admin-only">
+                <div class="section-header">
+                    <h2 class="section-title">Gerenciar Técnicas</h2>
+                    <button class="btn-secondary" onclick="showContentSection('admin-section')">
+
+                    </button>
+                </div>
+
+                <form class="booking-form" id="tecnica-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tecnica-nome">Nome da Técnica</label>
+                            <input type="text" id="tecnica-nome" name="nome" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tecnica-especialidade">Especialidade</label>
+                            <input type="text" id="tecnica-especialidade" name="especialidade" class="form-input"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tecnica-telefone">Telefone</label>
+                            <input type="tel" id="tecnica-telefone" name="telefone" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tecnica-email">Email</label>
+                            <input type="email" id="tecnica-email" name="email" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-submit"
+                        onclick="crudManager.saveTecnica(new FormData(document.getElementById('tecnica-form')))">
+                        <span>👩‍💼</span> Salvar Técnica
+                    </button>
+                </form>
+
+                <div class="appointments-list" id="tecnicas-list">
+                    <!-- Lista de técnicas será carregada aqui -->
+                </div>
+            </section>
+
+            <!-- Seção de CRUD Clientes -->
+            <section id="crud-clientes-section" class="content-section admin-only">
+                <div class="section-header">
+                    <h2 class="section-title">Gerenciar Clientes</h2>
+                    <button class="btn-secondary" onclick="showContentSection('admin-section')">
+                        ← Voltar ao Painel
+                    </button>
+                </div>
+
+                <div class="appointments-list" id="clientes-list">
+                    <!-- Lista de clientes será carregada aqui -->
+                </div>
+            </section>
+
+            <!-- Seção de CRUD Agendamentos -->
+            <section id="crud-agendamentos-section" class="content-section admin-only">
+                <div class="section-header">
+                    <h2 class="section-title">Gerenciar Agendamentos</h2>
+                    <button class="btn-secondary" onclick="showContentSection('admin-section')">
+                        ← Voltar ao Painel
+                    </button>
+                </div>
+
+                <div class="appointments-list" id="agendamentos-list">
+                    <!-- Lista de agendamentos será carregada aqui -->
+                </div>
+            </section>
+        </main>
+    </section>
+
+    <script src="authManager.js"></script>
+    <script src="auth.js"></script>
+    <script src="booking.js"></script>
+    <script src="crud-manager..js"></script>
+    <script src="script.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
+</body>
+
+</html>
