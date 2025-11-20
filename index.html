@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NailStudio - Agendamentos</title>
+    <title>NailStudio - Sistema Completo</title>
     <link rel="stylesheet" href="vicstely.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -13,33 +16,35 @@
     <section id="login-section" class="auth-section active-section">
         <div class="auth-container">
             <div class="auth-header">
+                <div class="logo-icon">💅</div>
                 <h1>NailStudio</h1>
-                <p>Faça login para acessar sua conta</p>
+                <p>Faça login para acessar o sistema</p>
             </div>
 
             <form class="auth-form" id="login-form">
                 <div class="form-group">
                     <label for="login-email">Email</label>
-                    <input type="email" id="login-email" class="form-input" required>
+                    <input type="email" id="login-email" class="form-input" placeholder="seu@email.com" required>
                 </div>
 
                 <div class="form-group">
                     <label for="login-password">Senha</label>
-                    <input type="password" id="login-password" class="form-input" required>
+                    <input type="password" id="login-password" class="form-input" placeholder="Sua senha" required>
                 </div>
 
-                <button type="submit" class="btn-submit">Entrar</button>
+                <button type="submit" class="btn-submit">
+                    <span>🔑</span> Entrar
+                </button>
 
                 <div class="auth-links">
-                    <p>Não tem uma conta? <a href="#" onclick="showSection('register-section')">Cadastre-se</a></p>
+                    <p>Não tem conta? <a href="#" onclick="showSection('register-section')">Cadastre-se</a></p>
                 </div>
             </form>
 
-            <!-- Credenciais de teste -->
             <div class="test-credentials">
-                <h4>Credenciais de Teste:</h4>
+                <h4>🧪 Acesso Rápido:</h4>
                 <p><strong>Admin:</strong> admin@nailstudio.com / admin123</p>
-                <p><strong>Cliente:</strong> Qualquer email/senha no cadastro</p>
+                <p><strong>Cliente:</strong> cliente@email.com / senha123</p>
             </div>
         </div>
     </section>
@@ -49,7 +54,7 @@
         <div class="auth-container">
             <div class="auth-header">
                 <h1>Criar Conta</h1>
-                <p>Cadastre-se para fazer agendamentos</p>
+                <p>Cadastre-se como cliente</p>
             </div>
 
             <form class="auth-form" id="register-form">
@@ -80,10 +85,12 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit">Criar Conta</button>
+                <button type="submit" class="btn-submit">
+                    <span>👤</span> Criar Conta
+                </button>
 
                 <div class="auth-links">
-                    <p>Já tem uma conta? <a href="#" onclick="showSection('login-section')">Faça login</a></p>
+                    <p>Já tem conta? <a href="#" onclick="showSection('login-section')">Fazer login</a></p>
                 </div>
             </form>
         </div>
@@ -153,6 +160,8 @@
                                 <option value="pedicure-completa" data-price="55">Pedicure Completa - R$ 55,00</option>
                                 <option value="alongamento-gel" data-price="85">Alongamento em Gel - R$ 85,00</option>
                                 <option value="spa-maos" data-price="65">Spa das Mãos - R$ 65,00</option>
+                                <option value="spa-pes" data-price="75">Spa dos Pés - R$ 75,00</option>
+                                <option value="completo" data-price="120">Combo Completo - R$ 120,00</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -162,6 +171,7 @@
                                 <option value="camila">Camila - Alongamentos</option>
                                 <option value="juliana">Juliana - Design Artístico</option>
                                 <option value="fernanda">Fernanda - Pedicure</option>
+                                <option value="beatriz">Beatriz - Spa</option>
                             </select>
                         </div>
                     </div>
@@ -169,7 +179,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="data">Data</label>
-                            <input type="date" id="data" class="form-input" required min="">
+                            <input type="date" id="data" class="form-input" required>
                         </div>
                         <div class="form-group">
                             <label for="horario">Horário Disponível</label>
@@ -188,6 +198,16 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="tipo-unha">Tipo de Unha</label>
+                        <select id="tipo-unha" class="form-input">
+                            <option value="">Natural</option>
+                            <option value="gel">Gel</option>
+                            <option value="acrigel">Acrigel</option>
+                            <option value="fibra">Fibra de Vidro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="observacoes">Observações (opcional)</label>
                         <textarea id="observacoes" class="form-input textarea" rows="4"
                             placeholder="Alguma preferência especial..."></textarea>
@@ -201,6 +221,10 @@
                         <div class="summary-item">
                             <span>Técnica:</span>
                             <span id="tecnica-selecionada">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Tipo de Unha:</span>
+                            <span id="tipo-unha-selecionado">-</span>
                         </div>
                         <div class="summary-item">
                             <span>Data e Hora:</span>
@@ -239,160 +263,441 @@
                 </div>
 
                 <div class="admin-controls">
-                    <h3 style="width: 100%; margin-bottom: 15px;">Gerenciar Dados do Sistema</h3>
-                    <button class="btn-primary"
-                        onclick="showContentSection('crud-servicos-section'); crudManager.loadServicos()">
-                        📋 Serviços
-                    </button>
-                    <button class="btn-primary"
-                        onclick="showContentSection('crud-tecnicas-section'); crudManager.loadTecnicas()">
-                        👩‍💼 Técnicas
-                    </button>
-                    <button class="btn-primary"
-                        onclick="showContentSection('crud-clientes-section'); crudManager.loadClientes()">
-                        👥 Clientes
-                    </button>
-                    <button class="btn-primary"
-                        onclick="showContentSection('crud-agendamentos-section'); crudManager.loadAgendamentos()">
-                        📅 Agendamentos
-                    </button>
+                    <input type="text" id="search-appointments" class="form-input" placeholder="Buscar agendamentos...">
+                    <select id="filter-status" class="form-input">
+                        <option value="">Todos os status</option>
+                        <option value="confirmado">Confirmados</option>
+                        <option value="pendente">Pendentes</option>
+                        <option value="cancelado">Cancelados</option>
+                    </select>
                 </div>
 
                 <div class="appointments-list" id="admin-appointments-list">
                     <!-- Agendamentos de todos os usuários serão carregados aqui -->
                 </div>
             </section>
-
-            <!-- Seção de CRUD Serviços -->
-            <section id="crud-servicos-section" class="content-section admin-only">
-                <div class="section-header">
-                    <h2 class="section-title">Gerenciar Serviços</h2>
-                    <button class="btn-secondary" onclick="showContentSection('admin-section')">
-                        ← Voltar ao Painel
-                    </button>
-                </div>
-
-                <form class="booking-form" id="servico-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="servico-nome">Nome do Serviço</label>
-                            <input type="text" id="servico-nome" name="nome" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="servico-preco">Preço (R$)</label>
-                            <input type="number" id="servico-preco" name="preco" class="form-input" step="0.01"
-                                required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="servico-descricao">Descrição</label>
-                            <textarea id="servico-descricao" name="descricao" class="form-input textarea" rows="3"
-                                required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="servico-duracao">Duração (minutos)</label>
-                            <input type="number" id="servico-duracao" name="duracao_minutos" class="form-input"
-                                value="60" required>
-                        </div>
-                    </div>
-
-                    <button type="button" class="btn-submit"
-                        onclick="crudManager.saveServico(new FormData(document.getElementById('servico-form')))">
-                        <span>💅</span> Salvar Serviço
-                    </button>
-                </form>
-
-                <div class="appointments-list" id="servicos-list">
-                    <!-- Lista de serviços será carregada aqui -->
-                </div>
-            </section>
-
-            <!-- Seção de CRUD Técnicas -->
-            <section id="crud-tecnicas-section" class="content-section admin-only">
-                <div class="section-header">
-                    <h2 class="section-title">Gerenciar Técnicas</h2>
-                    <button class="btn-secondary" onclick="showContentSection('admin-section')">
-
-                    </button>
-                </div>
-
-                <form class="booking-form" id="tecnica-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="tecnica-nome">Nome da Técnica</label>
-                            <input type="text" id="tecnica-nome" name="nome" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tecnica-especialidade">Especialidade</label>
-                            <input type="text" id="tecnica-especialidade" name="especialidade" class="form-input"
-                                required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="tecnica-telefone">Telefone</label>
-                            <input type="tel" id="tecnica-telefone" name="telefone" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tecnica-email">Email</label>
-                            <input type="email" id="tecnica-email" name="email" class="form-input" required>
-                        </div>
-                    </div>
-
-                    <button type="button" class="btn-submit"
-                        onclick="crudManager.saveTecnica(new FormData(document.getElementById('tecnica-form')))">
-                        <span>👩‍💼</span> Salvar Técnica
-                    </button>
-                </form>
-
-                <div class="appointments-list" id="tecnicas-list">
-                    <!-- Lista de técnicas será carregada aqui -->
-                </div>
-            </section>
-
-            <!-- Seção de CRUD Clientes -->
-            <section id="crud-clientes-section" class="content-section admin-only">
-                <div class="section-header">
-                    <h2 class="section-title">Gerenciar Clientes</h2>
-                    <button class="btn-secondary" onclick="showContentSection('admin-section')">
-                        ← Voltar ao Painel
-                    </button>
-                </div>
-
-                <div class="appointments-list" id="clientes-list">
-                    <!-- Lista de clientes será carregada aqui -->
-                </div>
-            </section>
-
-            <!-- Seção de CRUD Agendamentos -->
-            <section id="crud-agendamentos-section" class="content-section admin-only">
-                <div class="section-header">
-                    <h2 class="section-title">Gerenciar Agendamentos</h2>
-                    <button class="btn-secondary" onclick="showContentSection('admin-section')">
-                        ← Voltar ao Painel
-                    </button>
-                </div>
-
-                <div class="appointments-list" id="agendamentos-list">
-                    <!-- Lista de agendamentos será carregada aqui -->
-                </div>
-            </section>
         </main>
     </section>
 
-    <script src="authManager.js"></script>
-    <script src="auth.js"></script>
-    <script src="booking.js"></script>
-    <script src="crud-manager..js"></script>
-    <script src="script.js"></script>
-    <script src="app.js"></script>
+    <script>
+        // Sistema de Gerenciamento
+        class NailStudioSystem {
+            constructor() {
+                this.users = this.loadFromStorage('users') || [];
+                this.appointments = this.loadFromStorage('appointments') || [];
+                this.currentUser = this.loadFromStorage('currentUser') || null;
 
+                this.initializeSystem();
+            }
+
+            initializeSystem() {
+                // Criar usuário admin padrão se não existir
+                if (!this.users.find(user => user.role === 'admin')) {
+                    this.users.push({
+                        id: this.generateId(),
+                        name: 'Administrador',
+                        email: 'admin@nailstudio.com',
+                        password: 'admin123',
+                        phone: '(11) 99999-9999',
+                        role: 'admin',
+                        createdAt: new Date().toISOString()
+                    });
+                    this.saveToStorage('users', this.users);
+                }
+
+                // Verificar se há usuário logado
+                if (this.currentUser) {
+                    this.showMainSystem();
+                } else {
+                    showSection('login-section');
+                }
+
+                this.setupEventListeners();
+            }
+
+            // 🔐 SISTEMA DE AUTENTICAÇÃO
+            login(email, password) {
+                const user = this.users.find(u => u.email === email && u.password === password);
+                if (user) {
+                    this.currentUser = user;
+                    this.saveToStorage('currentUser', user);
+                    this.showMainSystem();
+                    return true;
+                }
+                return false;
+            }
+
+            logout() {
+                this.currentUser = null;
+                this.saveToStorage('currentUser', null);
+                showSection('login-section');
+            }
+
+            register(userData) {
+                if (this.users.find(u => u.email === userData.email)) {
+                    throw new Error('Email já cadastrado');
+                }
+
+                if (userData.password !== userData.confirmPassword) {
+                    throw new Error('Senhas não coincidem');
+                }
+
+                const newUser = {
+                    id: this.generateId(),
+                    ...userData,
+                    role: 'client',
+                    createdAt: new Date().toISOString()
+                };
+
+                this.users.push(newUser);
+                this.saveToStorage('users', this.users);
+                return newUser;
+            }
+
+            // 📅 SISTEMA DE AGENDAMENTOS
+            createAppointment(appointmentData) {
+                const appointment = {
+                    id: this.generateId(),
+                    ...appointmentData,
+                    userId: this.currentUser.id,
+                    userName: this.currentUser.name,
+                    userEmail: this.currentUser.email,
+                    status: 'pendente',
+                    createdAt: new Date().toISOString()
+                };
+
+                this.appointments.push(appointment);
+                this.saveToStorage('appointments', this.appointments);
+                return appointment;
+            }
+
+            cancelAppointment(appointmentId) {
+                const appointment = this.appointments.find(a => a.id === appointmentId);
+                if (appointment) {
+                    appointment.status = 'cancelado';
+                    this.saveToStorage('appointments', this.appointments);
+                }
+            }
+
+            confirmAppointment(appointmentId) {
+                const appointment = this.appointments.find(a => a.id === appointmentId);
+                if (appointment) {
+                    appointment.status = 'confirmado';
+                    this.saveToStorage('appointments', this.appointments);
+                }
+            }
+
+            getUserAppointments() {
+                return this.appointments.filter(a => a.userId === this.currentUser.id);
+            }
+
+            getAllAppointments() {
+                return this.appointments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            }
+
+            // 🎯 INTERFACE DO USUÁRIO
+            showMainSystem() {
+                showSection('main-system');
+                this.updateUserInterface();
+
+                if (this.currentUser.role === 'admin') {
+                    document.body.classList.add('user-admin');
+                    this.loadAdminPanel();
+                } else {
+                    this.loadUserAppointments();
+                }
+            }
+
+            updateUserInterface() {
+                document.getElementById('user-display-name').textContent = this.currentUser.name;
+                document.getElementById('user-avatar').textContent = this.currentUser.name.charAt(0).toUpperCase();
+                document.getElementById('user-role-display').textContent = this.currentUser.role === 'admin' ? 'Administrador' : 'Cliente';
+            }
+
+            loadUserAppointments() {
+                const appointments = this.getUserAppointments();
+                const container = document.getElementById('user-appointments-list');
+
+                if (appointments.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <p>Nenhum agendamento encontrado</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = appointments.map(appointment => `
+                    <div class="appointment-item">
+                        <div class="appointment-info">
+                            <div class="appointment-header">
+                                <strong>${appointment.serviceName}</strong>
+                                <span class="appointment-price">R$ ${appointment.price},00</span>
+                            </div>
+                            <div class="appointment-details">
+                                <div class="detail-item date">${this.formatDate(appointment.date)}</div>
+                                <div class="detail-item time">${appointment.time}</div>
+                                <div class="detail-item nail-tech">${appointment.technician}</div>
+                            </div>
+                        </div>
+                        <div class="status-container">
+                            <span class="status ${appointment.status}">${this.getStatusText(appointment.status)}</span>
+                            ${appointment.status === 'pendente' ?
+                        `<button class="cancel-btn" onclick="system.cancelAppointment('${appointment.id}'); system.loadUserAppointments()">Cancelar</button>` :
+                        ''
+                    }
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            loadAdminPanel() {
+                const appointments = this.getAllAppointments();
+                const container = document.getElementById('admin-appointments-list');
+
+                // Atualizar estatísticas
+                const today = new Date().toDateString();
+                const todayAppointments = appointments.filter(a => new Date(a.date).toDateString() === today);
+
+                document.getElementById('total-agendamentos').textContent = appointments.length;
+                document.getElementById('agendamentos-hoje').textContent = todayAppointments.length;
+                document.getElementById('agendamentos-pendentes').textContent = appointments.filter(a => a.status === 'pendente').length;
+
+                if (appointments.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <p>Nenhum agendamento encontrado</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = appointments.map(appointment => `
+                    <div class="appointment-item">
+                        <div class="appointment-info">
+                            <div class="appointment-header">
+                                <strong>${appointment.serviceName}</strong>
+                                <span class="appointment-price">R$ ${appointment.price},00</span>
+                            </div>
+                            <div class="appointment-details">
+                                <div class="detail-item date">${this.formatDate(appointment.date)}</div>
+                                <div class="detail-item time">${appointment.time}</div>
+                                <div class="detail-item nail-tech">${appointment.technician}</div>
+                            </div>
+                            <div class="appointment-client">
+                                <strong>Cliente:</strong> ${appointment.userName} (${appointment.userEmail})
+                            </div>
+                        </div>
+                        <div class="status-container">
+                            <span class="status ${appointment.status}">${this.getStatusText(appointment.status)}</span>
+                            ${appointment.status === 'pendente' ?
+                        `<button class="confirm-btn" onclick="system.confirmAppointment('${appointment.id}'); system.loadAdminPanel()">Confirmar</button>` :
+                        ''
+                    }
+                            <button class="cancel-btn" onclick="system.cancelAppointment('${appointment.id}'); system.loadAdminPanel()">Cancelar</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // 🛠️ UTILITÁRIOS
+            generateId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+
+            saveToStorage(key, data) {
+                localStorage.setItem(key, JSON.stringify(data));
+            }
+
+            loadFromStorage(key) {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            }
+
+            formatDate(dateString) {
+                return new Date(dateString).toLocaleDateString('pt-BR');
+            }
+
+            getStatusText(status) {
+                const statusMap = {
+                    'pendente': 'Pendente',
+                    'confirmado': 'Confirmado',
+                    'cancelado': 'Cancelado'
+                };
+                return statusMap[status] || status;
+            }
+
+            setupEventListeners() {
+                // Login
+                document.getElementById('login-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const email = document.getElementById('login-email').value;
+                    const password = document.getElementById('login-password').value;
+
+                    if (this.login(email, password)) {
+                        alert('Login realizado com sucesso!');
+                    } else {
+                        alert('Email ou senha incorretos!');
+                    }
+                });
+
+                // Cadastro
+                document.getElementById('register-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = {
+                        name: document.getElementById('register-name').value,
+                        phone: document.getElementById('register-phone').value,
+                        email: document.getElementById('register-email').value,
+                        password: document.getElementById('register-password').value,
+                        confirmPassword: document.getElementById('register-confirm-password').value
+                    };
+
+                    try {
+                        this.register(formData);
+                        alert('Cadastro realizado com sucesso! Faça login para continuar.');
+                        showSection('login-section');
+                    } catch (error) {
+                        alert(error.message);
+                    }
+                });
+
+                // Agendamento
+                document.getElementById('booking-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const serviceSelect = document.getElementById('servico');
+                    const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+
+                    const appointmentData = {
+                        serviceName: selectedOption.text.split(' - ')[0],
+                        price: selectedOption.dataset.price,
+                        technician: document.getElementById('tecnica').value,
+                        date: document.getElementById('data').value,
+                        time: document.getElementById('horario').value,
+                        type: document.getElementById('tipo-unha').value,
+                        observations: document.getElementById('observacoes').value
+                    };
+
+                    this.createAppointment(appointmentData);
+                    alert('Agendamento realizado com sucesso!');
+                    showContentSection('agendamentos-section');
+                    this.loadUserAppointments();
+                    e.target.reset();
+                    updateSummary();
+                });
+
+                // Navegação
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const sectionId = link.dataset.section;
+                        showContentSection(sectionId);
+                    });
+                });
+
+                // Configurar data mínima
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('data').min = today;
+
+                // Atualizar resumo em tempo real
+                document.querySelectorAll('#servico, #tecnica, #data, #horario').forEach(input => {
+                    input.addEventListener('change', updateSummary);
+                });
+            }
+        }
+
+        // Funções globais para navegação
+        function showSection(sectionId) {
+            document.querySelectorAll('.auth-section, .main-system').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            document.getElementById(sectionId).classList.add('active-section');
+        }
+
+        function showContentSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            document.getElementById(sectionId).classList.add('active-section');
+
+            // Atualizar navegação
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+
+            // Atualizar conteúdo específico
+            if (system.currentUser) {
+                if (sectionId === 'agendamentos-section' && system.currentUser.role === 'client') {
+                    system.loadUserAppointments();
+                } else if (sectionId === 'admin-section' && system.currentUser.role === 'admin') {
+                    system.loadAdminPanel();
+                }
+            }
+        }
+
+        function logout() {
+            system.logout();
+        }
+
+        // Função para atualizar resumo do formulário
+        function updateSummary() {
+            const servicoSelect = document.getElementById('servico');
+            const tecnicaSelect = document.getElementById('tecnica');
+            const tipoUnhaSelect = document.getElementById('tipo-unha');
+            const dataInput = document.getElementById('data');
+            const horarioSelect = document.getElementById('horario');
+
+            document.getElementById('servico-selecionado').textContent =
+                servicoSelect.value ? servicoSelect.options[servicoSelect.selectedIndex].text.split(' - ')[0] : '-';
+
+            document.getElementById('tecnica-selecionada').textContent =
+                tecnicaSelect.value ? tecnicaSelect.options[tecnicaSelect.selectedIndex].text : '-';
+
+            document.getElementById('tipo-unha-selecionado').textContent =
+                tipoUnhaSelect.value ? tipoUnhaSelect.options[tipoUnhaSelect.selectedIndex].text : 'Natural';
+
+            const dataHora = dataInput.value && horarioSelect.value ?
+                `${formatDate(dataInput.value)} às ${horarioSelect.value}` : '-';
+            document.getElementById('datahora-selecionada').textContent = dataHora;
+
+            updateTotal();
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR');
+        }
+
+        function updateTotal() {
+            const servicoSelect = document.getElementById('servico');
+            let total = 0;
+
+            if (servicoSelect.value) {
+                const price = servicoSelect.options[servicoSelect.selectedIndex].dataset.price;
+                total = parseInt(price);
+            }
+
+            document.getElementById('total-selecionado').textContent =
+                `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Inicializar sistema
+        const system = new NailStudioSystem();
+
+        // Mostrar links de admin para administradores
+        document.querySelectorAll('.admin-only').forEach(el => {
+            if (system.currentUser && system.currentUser.role === 'admin') {
+                el.style.display = 'block';
+            }
+        });
+    </script>
 </body>
 
 </html>
-</body>
-
-</html>
+    <!-- Tela de Login -->
+    <section id="login-section" class="auth-section active-section">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>Bem-vindo ao NailStudio</h1>
+                <p>Faça login para continuar</p>
