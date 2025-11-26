@@ -1,0 +1,47 @@
+<?php
+echo "🚀 CRIANDO .env.example...\n";
+
+$envContent = '# Configurações do Banco de Dados
+DB_HOST=localhost
+DB_NAME=studeo2026
+DB_USER=root
+DB_PASS=
+
+# URL da Aplicação
+APP_URL=http://localhost:8001
+
+# Chave CSRF para segurança (gerar uma chave única)
+CSRF_KEY=change_this_to_a_random_32_character_string
+
+# Ambiente da Aplicação (development/production)
+APP_ENV=development
+
+# Configurações de Sessão
+SESSION_NAME=studeo_session
+SESSION_LIFETIME=7200
+
+# Configurações de E-mail (opcional)
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_app_password
+MAIL_FROM=no-reply@studeo.com
+
+# Configurações de Upload
+UPLOAD_MAX_SIZE=10485760
+UPLOAD_ALLOWED_TYPES=image/jpeg,image/png,image/gif,application/pdf
+
+# Debug Mode (true/false)
+DEBUG=true';
+
+if (!file_exists('.env.example')) {
+    file_put_contents('.env.example', $envContent);
+    echo "✅ .env.example criado com sucesso!\n";
+} else {
+    echo "⚠️  .env.example já existe\n";
+}
+
+echo "\n🎯 PRÓXIMOS PASSOS:\n";
+echo "1. Copie o arquivo: cp .env.example .env\n";
+echo "2. Edite o .env com suas configurações reais\n";
+echo "3. Gere uma chave CSRF: php -r \"echo bin2hex(random_bytes(16));\"\n";
