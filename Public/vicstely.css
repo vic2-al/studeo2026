@@ -479,7 +479,7 @@ body {
 
 .confirm-btn:hover {
     background: var(--success);
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 /* === FORMULÁRIOS === */
@@ -560,7 +560,7 @@ body {
 
 .btn-submit {
     background: var(--primary);
-    color: white;
+    color: rgb(255, 255, 255);
     padding: 15px;
     width: 100%;
     justify-content: center;
